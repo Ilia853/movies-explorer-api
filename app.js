@@ -2,7 +2,11 @@
 const express = require('express');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const mongoose = require('mongoose');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const { errors } = require('celebrate');
 const routes = require('./routes/index');
+const { errorLogger } = require('./middlewares/logger');
+const { cors } = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
 
@@ -12,7 +16,23 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors);
 app.use(routes);
+app.use(errorLogger);
+app.use(errors());
+
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+
+  res
+    .status(statusCode)
+    .send({
+      message: statusCode === 500
+        ? 'На сервере произошла ошибка'
+        : message,
+    });
+  next();
+});
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
