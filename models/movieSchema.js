@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const mongoose = require('mongoose');
-// eslint-disable-next-line import/no-extraneous-dependencies
+const re = require('../const');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -23,17 +23,32 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image: { // TODO добавить валидацию на URL
+  image: {
     type: String,
     required: true,
+    validate: {
+      validator: function linkValidator(v) {
+        return re.test(v);
+      },
+    },
   },
-  trailerLink: { // TODO добавить валидацию на URL
+  trailerLink: {
     type: String,
     required: true,
+    validate: {
+      validator: function linkValidator(v) {
+        return re.test(v);
+      },
+    },
   },
-  thumbnail: { // TODO добавить валидацию на URL
+  thumbnail: {
     type: String,
     required: true,
+    validate: {
+      validator: function linkValidator(v) {
+        return re.test(v);
+      },
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

@@ -3,12 +3,12 @@ const router = require('express').Router();
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { celebrate, Joi } = require('celebrate');
 const { auth } = require('../middlewares/auth');
-const NotFoundError = require('../errors/not-found-err');
 const { createUser, login } = require('../controllers/usersControllers');
 const { requestLogger } = require('../middlewares/logger');
 
 const userRouter = require('./users');
 const movieRouter = require('./movies');
+const NotFoundError = require('../errors/not-found-err');
 
 router.use(requestLogger);
 
