@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
     .status(statusCode)
     .send({
       message: statusCode === 500
-        ? message
+        ? message // TODO вернуть надпись
         : message,
     });
   next();

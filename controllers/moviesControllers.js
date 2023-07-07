@@ -16,7 +16,13 @@ const deleteMovie = (req, res, next) => {
         throw new NotFoundError('Карточка не найдена');
       }
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Некорректный id карточки'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 const createMovie = (req, res, next) => {

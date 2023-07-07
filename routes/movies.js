@@ -6,7 +6,11 @@ const { deleteMovie, createMovie, getMovies } = require('../controllers/moviesCo
 
 const re = require('../const');
 
-router.delete('/:movieId', deleteMovie);
+router.delete('/:movieId', celebrate({
+  params: Joi.object().keys({
+    movieId: Joi.string().required(),
+  }),
+}), deleteMovie);
 
 router.post('/', celebrate({
   body: Joi.object().keys({
