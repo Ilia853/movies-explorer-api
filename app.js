@@ -8,9 +8,9 @@ const routes = require('./routes/index');
 const { errorLogger } = require('./middlewares/logger');
 const { cors } = require('./middlewares/cors');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/moviesdb' } = process.env;
 
-mongoose.connect('mongodb://127.0.0.1:27017/moviesdb', {});
+mongoose.connect(DB_URL, {});
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
     .status(statusCode)
     .send({
       message: statusCode === 500
-        ? message // TODO вернуть надпись
+        ? 'На сервере произошла ошибка'
         : message,
     });
   next();
