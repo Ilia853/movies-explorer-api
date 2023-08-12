@@ -14,7 +14,6 @@ router.delete('/:movieId', celebrate({
 
 router.post('/', celebrate({
   body: Joi.object().keys({
-    owner: Joi.string().required(),
     country: Joi.string().required(),
     director: Joi.string().required(),
     duration: Joi.number().required(),
